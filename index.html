@@ -4,181 +4,1048 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Marcelo Perez | Resume + Code Portfolio</title>
-  <meta name="description" content="Online resume and coding portfolio."/>
-  <link rel="stylesheet" href="style.css"/>
+  <meta name="description" content="Marcelo Perez's online resume and coding portfolio on GitHub."/>
+  <meta name="theme-color" content="#0b0f14"/>
+  <style>
+    /* =========================
+       Marcelo Perez Portfolio
+       Single-file: HTML + CSS + JS
+       ========================= */
+
+    :root{
+      --bg:#0b0f14;
+      --bg2:#0d1420;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.08);
+      --border: rgba(255,255,255,.12);
+      --text:#e7eefc;
+      --muted:#a8b3cf;
+      --accent:#60a5fa;
+      --accent2:#22c55e;
+      --warn:#f59e0b;
+      --danger:#f43f5e;
+      --shadow: 0 20px 55px rgba(0,0,0,.55);
+      --shadow2: 0 12px 25px rgba(0,0,0,.35);
+      --radius: 18px;
+      --radius2: 26px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --grad: radial-gradient(1200px 800px at 10% 10%, rgba(96,165,250,.23), transparent 55%),
+              radial-gradient(900px 600px at 90% 25%, rgba(34,197,94,.15), transparent 55%),
+              radial-gradient(700px 500px at 50% 90%, rgba(244,63,94,.12), transparent 58%),
+              linear-gradient(180deg, rgba(255,255,255,.04), transparent 60%);
+    }
+
+    [data-theme="light"]{
+      --bg:#f6f7fb;
+      --bg2:#eef3ff;
+      --panel: rgba(15,23,42,.06);
+      --panel2: rgba(15,23,42,.08);
+      --border: rgba(15,23,42,.14);
+      --text:#0f172a;
+      --muted:#42526e;
+      --accent:#2563eb;
+      --accent2:#16a34a;
+      --warn:#b45309;
+      --danger:#be123c;
+      --shadow: 0 18px 45px rgba(2,6,23,.12);
+      --shadow2: 0 12px 25px rgba(2,6,23,.10);
+      --grad: radial-gradient(1200px 800px at 10% 10%, rgba(37,99,235,.14), transparent 55%),
+              radial-gradient(900px 600px at 90% 25%, rgba(22,163,74,.10), transparent 55%),
+              radial-gradient(700px 500px at 50% 90%, rgba(190,18,60,.08), transparent 58%),
+              linear-gradient(180deg, rgba(15,23,42,.04), transparent 60%);
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background: var(--bg);
+      overflow-x:hidden;
+    }
+
+    .bgGlow{
+      position:fixed; inset:-40px;
+      background: var(--grad);
+      filter: blur(0px);
+      z-index:-2;
+    }
+    .noise{
+      position:fixed; inset:0;
+      background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='260' height='260' filter='url(%23n)' opacity='.22'/%3E%3C/svg%3E");
+      opacity:.14;
+      mix-blend-mode: overlay;
+      z-index:-1;
+      pointer-events:none;
+    }
+
+    a{color:inherit; text-decoration:none}
+    code, .mono{font-family:var(--mono)}
+    .container{max-width:1150px; margin:0 auto; padding: 18px 18px 70px}
+    .pill{display:inline-flex; gap:.45rem; align-items:center; padding:.35rem .7rem; border:1px solid var(--border); border-radius:999px; background:var(--panel); color:var(--muted); font-weight:700}
+    .dot{width:8px; height:8px; border-radius:50%; background:var(--accent)}
+    .kbd{font-family:var(--mono); font-size:.85rem; padding:.18rem .42rem; border-radius:.5rem; border:1px solid var(--border); background:var(--panel2); color:var(--muted)}
+
+    /* Top bar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(180deg, rgba(0,0,0,.28), rgba(0,0,0,.06));
+      border-bottom:1px solid var(--border);
+    }
+    [data-theme="light"] .topbar{
+      background: linear-gradient(180deg, rgba(255,255,255,.75), rgba(255,255,255,.45));
+    }
+    .topbarInner{
+      max-width:1150px; margin:0 auto;
+      padding:12px 18px;
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:900;
+      letter-spacing:.2px;
+    }
+    .logo{
+      width:34px; height:34px; border-radius:12px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      box-shadow: var(--shadow2);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo:before{
+      content:"";
+      position:absolute; inset:-60%;
+      background: conic-gradient(from 90deg, rgba(255,255,255,.0), rgba(255,255,255,.65), rgba(255,255,255,.0));
+      animation: spin 5s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .brand span{opacity:.9}
+
+    .nav{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:center; align-items:center;
+    }
+    .nav a{
+      color:var(--muted);
+      font-weight:800;
+      padding:.45rem .6rem;
+      border-radius:12px;
+      border:1px solid transparent;
+    }
+    .nav a:hover{
+      color:var(--text);
+      border-color:var(--border);
+      background:var(--panel);
+    }
+
+    .actions{
+      display:flex; gap:10px; align-items:center;
+    }
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:.55rem;
+      padding:.55rem .75rem;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: var(--panel);
+      font-weight:900;
+      cursor:pointer;
+      box-shadow: 0 10px 18px rgba(0,0,0,.15);
+      transition: transform .15s ease, border-color .15s ease;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(255,255,255,.2)}
+    [data-theme="light"] .btn:hover{border-color: rgba(15,23,42,.22)}
+    .btn.primary{
+      background: linear-gradient(135deg, var(--accent), rgba(96,165,250,.55));
+      border-color: transparent;
+      color:#fff;
+    }
+    .btn.ghost{
+      background: transparent;
+      border-color: var(--border);
+    }
+    .btn.small{padding:.45rem .62rem; border-radius:12px; font-size:.95rem}
+    .btnIcon{font-size:1.05rem}
+
+    /* Hero */
+    .hero{
+      margin-top:18px;
+      display:grid;
+      grid-template-columns: 1.6fr 1fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    @media (max-width: 960px){
+      .hero{grid-template-columns:1fr}
+      .nav{display:none}
+    }
+
+    .card{
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      background: var(--panel);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .cardInner{padding:18px}
+    .cardGlow:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(700px 350px at 20% 10%, rgba(96,165,250,.22), transparent 55%),
+                  radial-gradient(700px 350px at 80% 30%, rgba(34,197,94,.16), transparent 55%);
+      z-index:0;
+      pointer-events:none;
+    }
+    .card > *{position:relative; z-index:1}
+
+    .heroTitle{
+      font-size:2.35rem;
+      line-height:1.08;
+      margin: 4px 0 8px;
+      letter-spacing:-.6px;
+    }
+    .heroTitle .accent{
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+    }
+    .subtitle{margin:0; color:var(--muted); line-height:1.55; font-weight:650}
+    .ctaRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .miniRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px; color:var(--muted); font-weight:750}
+
+    .stats{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-top:14px;
+    }
+    .stat{
+      border:1px solid var(--border);
+      background: var(--panel2);
+      border-radius: 18px;
+      padding:12px;
+    }
+    .stat .big{font-weight:950; font-size:1.35rem}
+    .stat .small{color:var(--muted); font-weight:800; margin-top:2px}
+
+    /* Sections */
+    section{scroll-margin-top:90px}
+    .section{
+      margin-top:16px;
+      padding:16px;
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      background: var(--panel);
+      box-shadow: var(--shadow2);
+    }
+    .sectionHead{
+      display:flex; justify-content:space-between; align-items:flex-end; gap:12px; flex-wrap:wrap;
+      margin-bottom:10px;
+    }
+    .section h2{
+      margin:0;
+      font-size:1.5rem;
+      letter-spacing:-.3px;
+    }
+    .muted{color:var(--muted)}
+    .split{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 900px){ .split{grid-template-columns:1fr} }
+
+    /* Skills */
+    .pillRow{display:flex; flex-wrap:wrap; gap:8px}
+    .skillBars{display:grid; gap:10px; margin-top:12px}
+    .bar{
+      border:1px solid var(--border);
+      background: var(--panel2);
+      border-radius: 16px;
+      padding:10px;
+    }
+    .barTop{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap}
+    .barName{font-weight:900}
+    .barTrack{
+      margin-top:8px;
+      height:12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+    }
+    [data-theme="light"] .barTrack{background: rgba(15,23,42,.06); border-color: rgba(15,23,42,.10)}
+    .barFill{
+      height:100%;
+      width:0%;
+      border-radius:999px;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      transition: width 1.1s cubic-bezier(.2,.9,.2,1);
+    }
+
+    /* Projects */
+    .controls{display:flex; gap:10px; flex-wrap:wrap; align-items:center}
+    .input, select{
+      padding:.62rem .74rem;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background: transparent;
+      color:var(--text);
+      outline:none;
+      font-weight:800;
+    }
+    .input::placeholder{color:var(--muted); font-weight:700}
+    option{color:#111827}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:12px;
+    }
+    @media (max-width: 1050px){ .grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width: 680px){ .grid{grid-template-columns:1fr} }
+
+    .proj{
+      border:1px solid var(--border);
+      background: var(--panel2);
+      border-radius: 22px;
+      padding:14px;
+      position:relative;
+      overflow:hidden;
+      transition: transform .15s ease, border-color .15s ease;
+      min-height: 168px;
+    }
+    .proj:hover{transform: translateY(-2px); border-color: rgba(255,255,255,.22)}
+    [data-theme="light"] .proj:hover{border-color: rgba(15,23,42,.22)}
+    .proj h3{margin:.1rem 0 .4rem; letter-spacing:-.2px}
+    .proj p{margin:.2rem 0 .7rem; color:var(--muted); line-height:1.45}
+    .tagRow{display:flex; flex-wrap:wrap; gap:7px; margin:.6rem 0 .8rem}
+    .tag{
+      font-size:.82rem;
+      font-weight:900;
+      padding:.22rem .55rem;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background: rgba(96,165,250,.10);
+    }
+    .linkRow{display:flex; gap:8px; flex-wrap:wrap; margin-top:auto}
+    .linkRow a{
+      display:inline-flex; align-items:center; gap:.5rem;
+      padding:.45rem .65rem;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      font-weight:900;
+      background: rgba(255,255,255,.03);
+    }
+    [data-theme="light"] .linkRow a{background: rgba(15,23,42,.03)}
+    .badge{
+      position:absolute;
+      right:12px; top:12px;
+      padding:.28rem .55rem;
+      border-radius: 999px;
+      border:1px solid var(--border);
+      background: rgba(34,197,94,.10);
+      font-weight:950;
+      font-size:.78rem;
+      color: var(--text);
+    }
+
+    /* Timeline */
+    .timeline{display:grid; gap:12px}
+    .tItem{
+      border:1px solid var(--border);
+      background: var(--panel2);
+      border-radius: 22px;
+      padding:14px;
+    }
+    .tTop{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap}
+    .tTop h3{margin:0}
+    .tDate{color:var(--muted); font-weight:900}
+    .where{color:var(--muted); font-weight:800; margin:.2rem 0 .6rem}
+    ul{margin:.55rem 0 0; color:var(--muted); line-height:1.55}
+    li{margin:.15rem 0}
+
+    /* Contact */
+    .contactGrid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:12px;
+      margin-top:10px;
+    }
+    @media (max-width: 900px){ .contactGrid{grid-template-columns:1fr} }
+    .cCard{
+      border:1px solid var(--border);
+      background: var(--panel2);
+      border-radius: 22px;
+      padding:14px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+    }
+    .cIcon{
+      width:44px; height:44px; border-radius: 16px;
+      display:grid; place-items:center;
+      background: linear-gradient(135deg, rgba(96,165,250,.24), rgba(34,197,94,.16));
+      border:1px solid var(--border);
+      font-size:1.2rem;
+    }
+    .cLabel{font-weight:900}
+    .cValue{color:var(--muted); font-weight:800}
+
+    /* Toast */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform: translateX(-50%) translateY(20px);
+      opacity:0;
+      pointer-events:none;
+      padding:.7rem .9rem;
+      border-radius: 14px;
+      border:1px solid var(--border);
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+      color:#fff;
+      font-weight:900;
+      box-shadow: var(--shadow2);
+      transition: opacity .2s ease, transform .2s ease;
+      z-index:90;
+    }
+    [data-theme="light"] .toast{background: rgba(15,23,42,.70)}
+    .toast.show{opacity:1; transform: translateX(-50%) translateY(0)}
+
+    /* Reveal */
+    .reveal{opacity:0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease}
+    .reveal.show{opacity:1; transform: translateY(0)}
+
+    /* Footer */
+    footer{
+      margin-top:16px;
+      padding:16px;
+      border:1px solid var(--border);
+      border-radius: var(--radius2);
+      background: var(--panel);
+      text-align:center;
+      color:var(--muted);
+      font-weight:800;
+    }
+  </style>
 </head>
 
 <body>
-  <header class="topbar">
-    <a class="brand" href="#top">Your Name</a>
+  <div class="bgGlow"></div>
+  <div class="noise"></div>
 
-    <nav class="nav">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#experience">Experience</a>
-      <a href="#education">Education</a>
-      <a href="#contact">Contact</a>
-    </nav>
+  <div class="topbar">
+    <div class="topbarInner">
+      <a class="brand" href="#top" aria-label="Home">
+        <div class="logo"></div>
+        <span>Marcelo Perez</span>
+      </a>
 
-    <button class="themeBtn" id="themeBtn" aria-label="Toggle theme">☀️</button>
-  </header>
+      <nav class="nav" aria-label="Site">
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#education">Education</a>
+        <a href="#contact">Contact</a>
+      </nav>
+
+      <div class="actions">
+        <button class="btn small ghost" id="themeBtn" title="Toggle theme">
+          <span class="btnIcon" id="themeIcon">☀️</span>
+          <span class="mono">Theme</span>
+        </button>
+        <a class="btn small primary" href="#projects" title="Jump to projects">
+          <span class="btnIcon">🚀</span>
+          <span>Projects</span>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <main id="top" class="container">
+
+    <!-- HERO -->
     <section class="hero">
-      <div class="heroText">
-        <h1>Hi, I’m <span class="accent">Your Name</span>.</h1>
-        <p class="subtitle">
-          Student developer building projects in <strong>Python</strong>, <strong>JavaScript</strong>, and more.
-          This site shows my resume + the code I’ve done.
-        </p>
+      <div class="card cardGlow reveal">
+        <div class="cardInner">
+          <div class="pill"><span class="dot"></span> Online Resume + Code Portfolio</div>
 
-        <div class="ctaRow">
-          <a class="btn primary" href="#projects">View Projects</a>
-          <a class="btn" href="https://github.com/YOUR_GITHUB" target="_blank" rel="noreferrer">GitHub</a>
-          <a class="btn" href="#contact">Contact</a>
-        </div>
+          <h1 class="heroTitle">
+            Hi, I’m <span class="accent">Marcelo Perez</span>.
+          </h1>
 
-        <div class="mini">
-          <span>📍 City, State</span>
-          <span>•</span>
-          <span>Open to internships</span>
-        </div>
-      </div>
+          <p class="subtitle">
+            Student developer building projects in <b>Python</b>, <b>JavaScript</b>, and more.
+            This site shows my best work and links to the code.
+          </p>
 
-      <div class="heroCard">
-        <div class="card">
-          <h3>Quick Links</h3>
-          <div class="linkGrid">
-            <a class="chip" href="https://github.com/YOUR_GITHUB" target="_blank" rel="noreferrer">GitHub</a>
-            <a class="chip" href="https://www.linkedin.com/in/YOUR_LINKEDIN" target="_blank" rel="noreferrer">LinkedIn</a>
-            <a class="chip" href="mailto:you@email.com">Email</a>
-            <a class="chip" href="YOUR_RESUME_PDF_LINK" target="_blank" rel="noreferrer">Resume PDF</a>
+          <div class="ctaRow">
+            <a class="btn primary" href="#projects">View Projects</a>
+            <a class="btn" id="githubBtn" href="https://github.com/YOUR_GITHUB_USERNAME" target="_blank" rel="noreferrer">GitHub</a>
+            <button class="btn" id="copyEmailBtn" type="button">Copy Email</button>
           </div>
-          <p class="hint">Tip: Upload a PDF to this repo and link it.</p>
+
+          <div class="miniRow">
+            <span>📍 Miami, FL (edit this)</span>
+            <span>•</span>
+            <span>Open to internships</span>
+            <span>•</span>
+            <span class="mono">Press <span class="kbd">/</span> to search projects</span>
+          </div>
+
+          <div class="stats">
+            <div class="stat">
+              <div class="big" id="repoCount">—</div>
+              <div class="small">Public repos loaded</div>
+            </div>
+            <div class="stat">
+              <div class="big" id="starCount">—</div>
+              <div class="small">Total stars (loaded repos)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <div class="cardInner">
+          <h3 style="margin:.2rem 0 .6rem; letter-spacing:-.2px;">Auto-load from GitHub</h3>
+          <p class="muted" style="margin:.2rem 0 .9rem; line-height:1.5;">
+            Type your GitHub username and this page will pull your repos using the GitHub API.
+          </p>
+
+          <div class="controls">
+            <input class="input" id="ghUser" placeholder="GitHub username" value="YOUR_GITHUB_USERNAME" />
+            <button class="btn small primary" id="loadBtn" type="button">Load</button>
+          </div>
+
+          <div style="margin-top:12px">
+            <div class="pill"><span class="dot"></span> Tip</div>
+            <p class="muted" style="margin:.45rem 0 0; line-height:1.55;">
+              Pin your best repos on your GitHub profile too.
+            </p>
+          </div>
+
+          <div style="margin-top:14px; display:flex; gap:10px; flex-wrap:wrap;">
+            <a class="btn small" href="#skills">Skills</a>
+            <a class="btn small" href="#experience">Experience</a>
+            <a class="btn small" href="#contact">Contact</a>
+          </div>
         </div>
       </div>
     </section>
 
-    <section id="about" class="section">
-      <h2>About</h2>
-      <p>
-        Write 3–5 sentences about you. Example:
-        I’m a high school student who likes building apps, solving problems, and learning new tools.
-        I enjoy projects that involve logic, creativity, and real-world impact.
-      </p>
+    <!-- ABOUT -->
+    <section id="about" class="section reveal">
+      <div class="sectionHead">
+        <h2>About</h2>
+        <div class="pill"><span class="dot"></span> Quick summary</div>
+      </div>
+
+      <div class="split">
+        <div>
+          <p class="muted" style="margin-top:0; line-height:1.65">
+            Replace this with your real “about me”.
+            Example: I’m Marcelo Perez, a student who enjoys building projects, solving problems,
+            and learning new tools. I like making things that are useful, clean, and fast.
+          </p>
+
+          <p class="muted" style="line-height:1.65">
+            This site is built as a single file for GitHub Pages, so it’s super easy to edit.
+            You can add screenshots, demos, and links to each repo.
+          </p>
+        </div>
+
+        <div>
+          <div class="card" style="box-shadow:none; background:transparent; border:1px solid var(--border); border-radius:22px;">
+            <div class="cardInner">
+              <div class="pill"><span class="dot"></span> Highlights</div>
+              <ul>
+                <li>Strong interest in programming + building real projects</li>
+                <li>Comfortable learning new tools quickly</li>
+                <li>Organized, goal-driven, and consistent</li>
+              </ul>
+              <p class="muted" style="margin:.6rem 0 0">
+                Edit these bullets to match you.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <section id="skills" class="section">
-      <h2>Skills</h2>
-      <div class="pillRow">
+    <!-- SKILLS -->
+    <section id="skills" class="section reveal">
+      <div class="sectionHead">
+        <h2>Skills</h2>
+        <div class="pill"><span class="dot"></span> What I use</div>
+      </div>
+
+      <div class="pillRow" aria-label="Skills list">
         <span class="pill">Python</span>
         <span class="pill">JavaScript</span>
         <span class="pill">HTML</span>
         <span class="pill">CSS</span>
         <span class="pill">Git/GitHub</span>
         <span class="pill">APIs</span>
-        <span class="pill">Data Structures</span>
+        <span class="pill">Problem Solving</span>
+        <span class="pill">Algorithms</span>
       </div>
-      <p class="subnote">Replace these with your real skills.</p>
+
+      <div class="skillBars" aria-label="Skill bars">
+        <div class="bar">
+          <div class="barTop"><div class="barName">Python</div><div class="muted mono">80%</div></div>
+          <div class="barTrack"><div class="barFill" data-fill="80"></div></div>
+        </div>
+        <div class="bar">
+          <div class="barTop"><div class="barName">JavaScript</div><div class="muted mono">70%</div></div>
+          <div class="barTrack"><div class="barFill" data-fill="70"></div></div>
+        </div>
+        <div class="bar">
+          <div class="barTop"><div class="barName">HTML/CSS</div><div class="muted mono">75%</div></div>
+          <div class="barTrack"><div class="barFill" data-fill="75"></div></div>
+        </div>
+        <div class="bar">
+          <div class="barTop"><div class="barName">Git/GitHub</div><div class="muted mono">65%</div></div>
+          <div class="barTrack"><div class="barFill" data-fill="65"></div></div>
+        </div>
+      </div>
     </section>
 
-    <section id="projects" class="section">
+    <!-- PROJECTS -->
+    <section id="projects" class="section reveal">
       <div class="sectionHead">
         <h2>Projects</h2>
-        <div class="filters">
-          <input id="search" class="search" placeholder="Search projects…" />
-          <select id="tagFilter" class="select">
-            <option value="all">All tags</option>
+        <div class="controls">
+          <input class="input" id="search" placeholder="Search projects… (press /)" />
+          <select id="langFilter" aria-label="Language filter">
+            <option value="all">All languages</option>
+          </select>
+          <select id="sortBy" aria-label="Sort">
+            <option value="updated">Sort: Recently updated</option>
+            <option value="stars">Sort: Stars</option>
+            <option value="name">Sort: Name</option>
           </select>
         </div>
       </div>
 
-      <div id="projectGrid" class="grid"></div>
+      <p class="muted" style="margin-top:0; line-height:1.55">
+        These load from GitHub. You can also add custom projects by editing the <span class="mono">customProjects</span> list in the script.
+      </p>
 
-      <div class="noteBox">
-        <strong>How to add projects:</strong> Edit the project list inside <code>script.js</code>.
-        Put your GitHub repo link, a short description, and (optional) a live demo link.
+      <div id="projectGrid" class="grid" aria-live="polite"></div>
+
+      <div style="margin-top:12px" class="muted">
+        <span class="pill"><span class="dot"></span> Tip</span>
+        <span style="margin-left:8px">
+          Add screenshots in your repo README, and link a live demo when you can.
+        </span>
       </div>
     </section>
 
-    <section id="experience" class="section">
-      <h2>Experience</h2>
+    <!-- EXPERIENCE -->
+    <section id="experience" class="section reveal">
+      <div class="sectionHead">
+        <h2>Experience</h2>
+        <div class="pill"><span class="dot"></span> Timeline</div>
+      </div>
 
       <div class="timeline">
-        <div class="item">
-          <div class="itemTop">
-            <h3>Role / Position</h3>
-            <span class="date">Month YYYY – Month YYYY</span>
+        <div class="tItem">
+          <div class="tTop">
+            <h3>Student Developer / Projects</h3>
+            <div class="tDate">2024 – Present</div>
           </div>
-          <p class="where">Organization • City</p>
+          <div class="where">Independent • Miami, FL</div>
           <ul>
-            <li>What you did (1)</li>
-            <li>What you did (2)</li>
-            <li>Result / impact</li>
+            <li>Built coding projects and practiced problem solving consistently</li>
+            <li>Learned how to use GitHub to publish and share work</li>
+            <li>Improved clean coding habits and debugging skills</li>
           </ul>
         </div>
 
-        <div class="item">
-          <div class="itemTop">
-            <h3>Club / Leadership</h3>
-            <span class="date">Month YYYY – Present</span>
+        <div class="tItem">
+          <div class="tTop">
+            <h3>Club / Leadership (edit this)</h3>
+            <div class="tDate">Month YYYY – Present</div>
           </div>
-          <p class="where">School / Club Name</p>
+          <div class="where">School / Organization</div>
           <ul>
-            <li>Led / organized events or projects</li>
-            <li>Managed responsibilities</li>
+            <li>Organized events, helped teammates, and stayed consistent</li>
+            <li>Worked on communication and responsibility</li>
           </ul>
         </div>
       </div>
     </section>
 
-    <section id="education" class="section">
-      <h2>Education</h2>
-      <div class="card">
-        <div class="itemTop">
-          <h3>School Name</h3>
-          <span class="date">Expected Graduation: YYYY</span>
+    <!-- EDUCATION -->
+    <section id="education" class="section reveal">
+      <div class="sectionHead">
+        <h2>Education</h2>
+        <div class="pill"><span class="dot"></span> School</div>
+      </div>
+
+      <div class="tItem" style="margin-top:0">
+        <div class="tTop">
+          <h3>Your School Name (edit)</h3>
+          <div class="tDate">Expected Grad: 20XX</div>
         </div>
-        <p class="where">City, State</p>
-        <p><strong>Relevant Coursework:</strong> Programming, Computer Science, Math, etc.</p>
+        <div class="where">City, State</div>
+        <ul>
+          <li>Relevant: Computer Science, Math, Business, etc.</li>
+          <li>Activities: Clubs, sports, volunteering</li>
+        </ul>
       </div>
     </section>
 
-    <section id="contact" class="section">
-      <h2>Contact</h2>
+    <!-- CONTACT -->
+    <section id="contact" class="section reveal">
+      <div class="sectionHead">
+        <h2>Contact</h2>
+        <div class="pill"><span class="dot"></span> Let’s connect</div>
+      </div>
+
       <div class="contactGrid">
-        <a class="contactCard" href="mailto:you@email.com">
-          <div class="icon">✉️</div>
+        <a class="cCard" id="emailLink" href="mailto:you@email.com">
+          <div class="cIcon">✉️</div>
           <div>
-            <div class="label">Email</div>
-            <div class="value">you@email.com</div>
+            <div class="cLabel">Email</div>
+            <div class="cValue" id="emailText">you@email.com</div>
           </div>
         </a>
 
-        <a class="contactCard" href="https://github.com/YOUR_GITHUB" target="_blank" rel="noreferrer">
-          <div class="icon">💻</div>
+        <a class="cCard" id="ghLink" href="https://github.com/YOUR_GITHUB_USERNAME" target="_blank" rel="noreferrer">
+          <div class="cIcon">💻</div>
           <div>
-            <div class="label">GitHub</div>
-            <div class="value">@YOUR_GITHUB</div>
+            <div class="cLabel">GitHub</div>
+            <div class="cValue">@YOUR_GITHUB_USERNAME</div>
           </div>
         </a>
 
-        <a class="contactCard" href="https://www.linkedin.com/in/YOUR_LINKEDIN" target="_blank" rel="noreferrer">
-          <div class="icon">🔗</div>
+        <a class="cCard" href="https://www.linkedin.com/" target="_blank" rel="noreferrer">
+          <div class="cIcon">🔗</div>
           <div>
-            <div class="label">LinkedIn</div>
-            <div class="value">/in/YOUR_LINKEDIN</div>
+            <div class="cLabel">LinkedIn</div>
+            <div class="cValue">Add your profile</div>
           </div>
         </a>
       </div>
+
+      <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+        <button class="btn" id="copySiteBtn" type="button">Copy Site Link</button>
+        <button class="btn" id="downloadBtn" type="button">Print / Save as PDF</button>
+      </div>
     </section>
 
-    <footer class="footer">
-      <p>© <span id="year"></span> Your Name • Built with GitHub Pages</p>
+    <footer class="reveal">
+      © <span id="year"></span> Marcelo Perez • Built with GitHub Pages • <span class="mono">index.html</span> only
     </footer>
+
   </main>
 
-  <script src="script.js"></script>
+  <div class="toast" id="toast">Copied!</div>
+
+  <script>
+    // ===========================================
+    // Marcelo Perez — Single-file Portfolio Script
+    // ===========================================
+
+    // --------- Helpers ----------
+    const $ = (q) => document.querySelector(q);
+    const $$ = (q) => Array.from(document.querySelectorAll(q));
+
+    function toast(msg="Copied!"){
+      const t = $("#toast");
+      t.textContent = msg;
+      t.classList.add("show");
+      clearTimeout(toast._t);
+      toast._t = setTimeout(()=>t.classList.remove("show"), 1400);
+    }
+
+    function escapeHtml(str=""){
+      return String(str).replace(/[&<>"']/g, (m) => ({
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[m]));
+    }
+
+    // --------- Theme ----------
+    const themeBtn = $("#themeBtn");
+    const themeIcon = $("#themeIcon");
+
+    const savedTheme = localStorage.getItem("theme") || "dark";
+    if (savedTheme === "light") document.documentElement.setAttribute("data-theme","light");
+    updateThemeIcon();
+
+    themeBtn.addEventListener("click", () => {
+      const isLight = document.documentElement.getAttribute("data-theme") === "light";
+      if (isLight){
+        document.documentElement.removeAttribute("data-theme");
+        localStorage.setItem("theme","dark");
+      } else {
+        document.documentElement.setAttribute("data-theme","light");
+        localStorage.setItem("theme","light");
+      }
+      updateThemeIcon();
+    });
+
+    function updateThemeIcon(){
+      const isLight = document.documentElement.getAttribute("data-theme") === "light";
+      themeIcon.textContent = isLight ? "🌙" : "☀️";
+    }
+
+    // --------- Reveal on scroll ----------
+    const obs = new IntersectionObserver((entries)=>{
+      for (const e of entries){
+        if (e.isIntersecting){
+          e.target.classList.add("show");
+          obs.unobserve(e.target);
+        }
+      }
+    }, {threshold:0.12});
+
+    $$(".reveal").forEach(el => obs.observe(el));
+
+    // --------- Animate skill bars when visible ----------
+    const barObs = new IntersectionObserver((entries)=>{
+      for (const e of entries){
+        if (e.isIntersecting){
+          const fills = e.target.querySelectorAll(".barFill");
+          fills.forEach(f => f.style.width = (f.dataset.fill || 0) + "%");
+          barObs.unobserve(e.target);
+        }
+      }
+    }, {threshold:0.25});
+    barObs.observe($("#skills"));
+
+    // --------- Contact buttons ----------
+    const EMAIL = "you@email.com"; // <--- CHANGE THIS
+    const SITE_FALLBACK = location.href;
+
+    $("#emailText").textContent = EMAIL;
+    $("#emailLink").href = "mailto:" + EMAIL;
+
+    $("#copyEmailBtn").addEventListener("click", async ()=>{
+      try{
+        await navigator.clipboard.writeText(EMAIL);
+        toast("Email copied!");
+      } catch {
+        toast("Copy blocked");
+      }
+    });
+
+    $("#copySiteBtn").addEventListener("click", async ()=>{
+      try{
+        await navigator.clipboard.writeText(SITE_FALLBACK);
+        toast("Link copied!");
+      } catch {
+        toast("Copy blocked");
+      }
+    });
+
+    $("#downloadBtn").addEventListener("click", ()=> window.print());
+
+    // Keyboard shortcut: "/" focuses search
+    document.addEventListener("keydown", (e)=>{
+      if (e.key === "/" && document.activeElement !== $("#search")){
+        e.preventDefault();
+        $("#search").focus();
+      }
+    });
+
+    // --------- Projects (GitHub API + custom) ----------
+    const projectGrid = $("#projectGrid");
+    const searchInput = $("#search");
+    const langFilter = $("#langFilter");
+    const sortBy = $("#sortBy");
+    const ghUserInput = $("#ghUser");
+    const loadBtn = $("#loadBtn");
+    const repoCountEl = $("#repoCount");
+    const starCountEl = $("#starCount");
+
+    const customProjects = [
+      // Add your best projects here (optional). They will show even if API fails.
+      // { name:"Cool Project", description:"Short description", language:"Python", stargazers_count: 0, html_url:"https://github.com/...", homepage:"https://...", updated_at:"2026-01-01T00:00:00Z" }
+    ];
+
+    let allProjects = [];
+    let lastUser = "";
+
+    function normalizeRepo(r){
+      return {
+        name: r.name || "Untitled",
+        description: r.description || "",
+        language: r.language || "Unknown",
+        stargazers_count: Number(r.stargazers_count || 0),
+        forks_count: Number(r.forks_count || 0),
+        html_url: r.html_url || "#",
+        homepage: r.homepage || "",
+        updated_at: r.updated_at || "",
+        archived: !!r.archived,
+        fork: !!r.fork
+      };
+    }
+
+    function setFiltersFromProjects(list){
+      const langs = Array.from(new Set(list.map(p=>p.language).filter(Boolean))).sort((a,b)=>a.localeCompare(b));
+      langFilter.innerHTML = `<option value="all">All languages</option>` + langs.map(l=>`<option value="${escapeHtml(l)}">${escapeHtml(l)}</option>`).join("");
+    }
+
+    function sortProjects(list){
+      const key = sortBy.value;
+      const copy = list.slice();
+      if (key === "stars"){
+        copy.sort((a,b)=> (b.stargazers_count - a.stargazers_count) || (b.updated_at.localeCompare(a.updated_at)));
+      } else if (key === "name"){
+        copy.sort((a,b)=> a.name.localeCompare(b.name));
+      } else { // updated
+        copy.sort((a,b)=> b.updated_at.localeCompare(a.updated_at));
+      }
+      return copy;
+    }
+
+    function render(){
+      const q = (searchInput.value || "").toLowerCase().trim();
+      const lang = langFilter.value;
+
+      let list = allProjects.filter(p=>{
+        const text = (p.name + " " + p.description + " " + p.language).toLowerCase();
+        const matchText = !q || text.includes(q);
+        const matchLang = (lang === "all") ? true : (p.language === lang);
+        return matchText && matchLang;
+      });
+
+      list = sortProjects(list);
+
+      projectGrid.innerHTML = "";
+
+      if (!list.length){
+        projectGrid.innerHTML = `<div class="tItem" style="grid-column:1/-1;">
+          <b>No projects found.</b>
+          <div class="muted" style="margin-top:6px;">Try a different search or load a different GitHub username.</div>
+        </div>`;
+        return;
+      }
+
+      for (const p of list){
+        const tags = [
+          p.language || "Unknown",
+          p.fork ? "Fork" : "",
+          p.archived ? "Archived" : "",
+          p.stargazers_count ? `★ ${p.stargazers_count}` : ""
+        ].filter(Boolean);
+
+        const demoLink = p.homepage && p.homepage.startsWith("http") ? p.homepage : "";
+
+        const badge = p.archived ? `<span class="badge">Archived</span>` : (p.fork ? `<span class="badge">Fork</span>` : "");
+
+        const card = document.createElement("div");
+        card.className = "proj";
+
+        card.innerHTML = `
+          ${badge}
+          <h3>${escapeHtml(p.name)}</h3>
+          <p>${escapeHtml(p.description || "No description yet. Add one in the repo settings or README.")}</p>
+          <div class="tagRow">
+            ${tags.map(t=>`<span class="tag">${escapeHtml(t)}</span>`).join("")}
+          </div>
+          <div class="linkRow">
+            <a href="${escapeHtml(p.html_url)}" target="_blank" rel="noreferrer">💾 Repo</a>
+            ${demoLink ? `<a href="${escapeHtml(demoLink)}" target="_blank" rel="noreferrer">🌐 Demo</a>` : ``}
+          </div>
+        `;
+
+        projectGrid.appendChild(card);
+      }
+    }
+
+    async function loadRepos(username){
+      username = (username || "").trim();
+      if (!username) return;
+
+      lastUser = username;
+
+      // Update GitHub buttons/links
+      $("#githubBtn").href = `https://github.com/${username}`;
+      $("#ghLink").href = `https://github.com/${username}`;
+      $("#ghLink .cValue").textContent = `@${username}`;
+
+      // Loading state
+      repoCountEl.textContent = "…";
+      starCountEl.textContent = "…";
+      projectGrid.innerHTML = `<div class="tItem" style="grid-column:1/-1;">
+        <b>Loading repos…</b>
+        <div class="muted" style="margin-top:6px;">If you have a lot, it may take a moment.</div>
+      </div>`;
+
+      try{
+        // GitHub API: fetch up to 100 public repos
+        const url = `https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=100&sort=updated`;
+        const res = await fetch(url, {headers: {"Accept":"application/vnd.github+json"}});
+        if (!res.ok) throw new Error("GitHub API error");
+
+        const data = await res.json();
+        const repos = Array.isArray(data) ? data.map(normalizeRepo) : [];
+
+        // Combine with custom projects (custom on top)
+        allProjects = [...customProjects.map(normalizeRepo), ...repos];
+
+        // Stats
+        repoCountEl.textContent = String(repos.length);
+        const totalStars = repos.reduce((sum,r)=> sum + (r.stargazers_count||0), 0);
+        starCountEl.textContent = String(totalStars);
+
+        setFiltersFromProjects(allProjects);
+        render();
+        toast("Repos loaded!");
+      } catch (err){
+        // Fallback to custom projects
+        allProjects = customProjects.map(normalizeRepo);
+        setFiltersFromProjects(allProjects);
+
+        repoCountEl.textContent = "0";
+        starCountEl.textContent = "0";
+
+        projectGrid.innerHTML = `<div class="tItem" style="grid-column:1/-1;">
+          <b>Couldn’t load repos.</b>
+          <div class="muted" style="margin-top:6px;">
+            Check the username, or GitHub API rate limit might be hit.
+            You can still add projects manually in <span class="mono">customProjects</span>.
+          </div>
+        </div>`;
+        toast("Load failed");
+      }
+    }
+
+    // Events
+    searchInput.addEventListener("input", render);
+    langFilter.addEventListener("change", render);
+    sortBy.addEventListener("change", render);
+
+    loadBtn.addEventListener("click", ()=>{
+      loadRepos(ghUserInput.value);
+    });
+
+    // Auto-load on start
+    document.getElementById("year").textContent = new Date().getFullYear();
+    loadRepos(ghUserInput.value);
+
+    // Extra: if user pastes full GitHub URL, extract username
+    ghUserInput.addEventListener("change", ()=>{
+      const v = ghUserInput.value.trim();
+      const m = v.match(/github\.com\/([A-Za-z0-9-]+)/);
+      if (m) ghUserInput.value = m[1];
+    });
+  </script>
 </body>
 </html>
