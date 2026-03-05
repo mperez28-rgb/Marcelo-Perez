@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Your Name | Resume + Code Portfolio</title>
+  <meta name="description" content="Online resume and coding portfolio."/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top">Your Name</a>
+
+    <nav class="nav">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#experience">Experience</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+
+    <button class="themeBtn" id="themeBtn" aria-label="Toggle theme">☀️</button>
+  </header>
+
+  <main id="top" class="container">
+    <section class="hero">
+      <div class="heroText">
+        <h1>Hi, I’m <span class="accent">Your Name</span>.</h1>
+        <p class="subtitle">
+          Student developer building projects in <strong>Python</strong>, <strong>JavaScript</strong>, and more.
+          This site shows my resume + the code I’ve done.
+        </p>
+
+        <div class="ctaRow">
+          <a class="btn primary" href="#projects">View Projects</a>
+          <a class="btn" href="https://github.com/YOUR_GITHUB" target="_blank" rel="noreferrer">GitHub</a>
+          <a class="btn" href="#contact">Contact</a>
+        </div>
+
+        <div class="mini">
+          <span>📍 City, State</span>
+          <span>•</span>
+          <span>Open to internships</span>
+        </div>
+      </div>
+
+      <div class="heroCard">
+        <div class="card">
+          <h3>Quick Links</h3>
+          <div class="linkGrid">
+            <a class="chip" href="https://github.com/YOUR_GITHUB" target="_blank" rel="noreferrer">GitHub</a>
+            <a class="chip" href="https://www.linkedin.com/in/YOUR_LINKEDIN" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a class="chip" href="mailto:you@email.com">Email</a>
+            <a class="chip" href="YOUR_RESUME_PDF_LINK" target="_blank" rel="noreferrer">Resume PDF</a>
+          </div>
+          <p class="hint">Tip: Upload a PDF to this repo and link it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <h2>About</h2>
+      <p>
+        Write 3–5 sentences about you. Example:
+        I’m a high school student who likes building apps, solving problems, and learning new tools.
+        I enjoy projects that involve logic, creativity, and real-world impact.
+      </p>
+    </section>
+
+    <section id="skills" class="section">
+      <h2>Skills</h2>
+      <div class="pillRow">
+        <span class="pill">Python</span>
+        <span class="pill">JavaScript</span>
+        <span class="pill">HTML</span>
+        <span class="pill">CSS</span>
+        <span class="pill">Git/GitHub</span>
+        <span class="pill">APIs</span>
+        <span class="pill">Data Structures</span>
+      </div>
+      <p class="subnote">Replace these with your real skills.</p>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="sectionHead">
+        <h2>Projects</h2>
+        <div class="filters">
+          <input id="search" class="search" placeholder="Search projects…" />
+          <select id="tagFilter" class="select">
+            <option value="all">All tags</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="projectGrid" class="grid"></div>
+
+      <div class="noteBox">
+        <strong>How to add projects:</strong> Edit the project list inside <code>script.js</code>.
+        Put your GitHub repo link, a short description, and (optional) a live demo link.
+      </div>
+    </section>
+
+    <section id="experience" class="section">
+      <h2>Experience</h2>
+
+      <div class="timeline">
+        <div class="item">
+          <div class="itemTop">
+            <h3>Role / Position</h3>
+            <span class="date">Month YYYY – Month YYYY</span>
+          </div>
+          <p class="where">Organization • City</p>
+          <ul>
+            <li>What you did (1)</li>
+            <li>What you did (2)</li>
+            <li>Result / impact</li>
+          </ul>
+        </div>
+
+        <div class="item">
+          <div class="itemTop">
+            <h3>Club / Leadership</h3>
+            <span class="date">Month YYYY – Present</span>
+          </div>
+          <p class="where">School / Club Name</p>
+          <ul>
+            <li>Led / organized events or projects</li>
+            <li>Managed responsibilities</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="education" class="section">
+      <h2>Education</h2>
+      <div class="card">
+        <div class="itemTop">
+          <h3>School Name</h3>
+          <span class="date">Expected Graduation: YYYY</span>
+        </div>
+        <p class="where">City, State</p>
+        <p><strong>Relevant Coursework:</strong> Programming, Computer Science, Math, etc.</p>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <h2>Contact</h2>
+      <div class="contactGrid">
+        <a class="contactCard" href="mailto:you@email.com">
+          <div class="icon">✉️</div>
+          <div>
+            <div class="label">Email</div>
+            <div class="value">you@email.com</div>
+          </div>
+        </a>
+
+        <a class="contactCard" href="https://github.com/YOUR_GITHUB" target="_blank" rel="noreferrer">
+          <div class="icon">💻</div>
+          <div>
+            <div class="label">GitHub</div>
+            <div class="value">@YOUR_GITHUB</div>
+          </div>
+        </a>
+
+        <a class="contactCard" href="https://www.linkedin.com/in/YOUR_LINKEDIN" target="_blank" rel="noreferrer">
+          <div class="icon">🔗</div>
+          <div>
+            <div class="label">LinkedIn</div>
+            <div class="value">/in/YOUR_LINKEDIN</div>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>© <span id="year"></span> Your Name • Built with GitHub Pages</p>
+    </footer>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
